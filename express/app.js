@@ -9,7 +9,7 @@ app.use(morgan('combined'))
 
 
 /****** Configuration *****/
-const port = (process.env.PORT || 8081);
+const port = (process.env.PORT || 8080);
 app.use(express.static(path.join(__dirname, '../build')));
 
 var mongoose = require('mongoose');
@@ -69,6 +69,7 @@ pizza.save(function (err, pizza) {
 
 
 app.post('/api/NewQuestion', (req, res) => {
+    console.log('enter meeeeeee')
     var NewQuestion = new questions(req.body)
     NewQuestion.save(function (err, NewQuestion) {
         if (err) { return next(err) }

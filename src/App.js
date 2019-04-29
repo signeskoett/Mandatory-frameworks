@@ -36,6 +36,8 @@ class App extends Component {
 
 
     addQuestion(questions) {
+
+        console.log((questions))
         fetch(`${this.api_url}/NewQuestion`, {
             method: 'POST',
             body: JSON.stringify({
