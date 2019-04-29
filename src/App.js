@@ -35,7 +35,7 @@ class App extends Component {
 
 
     addQuestion(questions) {
-        fetch('https://signe-frameworks.herokuapp.com//NewQuestion', {
+        fetch('https://signe-frameworks.herokuapp.com/NewQuestion', {
             method: 'POST',
             body: JSON.stringify({
                 questions: questions,
