@@ -9,7 +9,7 @@ class QuestionList extends Component {
 
         this.props.qas.forEach((elm) => {
             list.push(<li id="spm_elm">
-                <Link to={`/question/${elm._id}`}>{elm.questions }</Link>
+                <Link to={`/api/question/${elm._id}`}>{elm.questions }</Link>
             </li>)
         });
 
@@ -21,7 +21,7 @@ class QuestionList extends Component {
                 </ul>
 
                 <div >
-                    <Link to={`/NewQuestion`} id="nyt_spm_button">Add new question</Link>
+                    <Link to={`/api/NewQuestion`} id="nyt_spm_button">Add new question</Link>
                 </div>
             </div>
 

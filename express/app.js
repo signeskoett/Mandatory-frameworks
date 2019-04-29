@@ -68,7 +68,7 @@ pizza.save(function (err, pizza) {
 
 
 
-app.post('/NewQuestion', (req, res) => {
+app.post('/api/NewQuestion', (req, res) => {
     var NewQuestion = new questions(req.body)
     NewQuestion.save(function (err, NewQuestion) {
         if (err) { return next(err) }
@@ -79,7 +79,7 @@ app.post('/NewQuestion', (req, res) => {
 
 
 
-app.post('/answers/:id', async (req, res) => {
+app.post('/api/answers/:id', async (req, res) => {
     console.log(req.body)
     const answer = {answers:req.body.answers, votes:0};
 
@@ -107,7 +107,7 @@ app.post('/answers/:id', async (req, res) => {
 
 
 
-app.post('/votes/:id', async (req, res) => {
+app.post('/api/votes/:id', async (req, res) => {
     const {answerId, count} = req.body;
 
     const question = await questions.findOne(
@@ -147,7 +147,7 @@ app.post('/votes/:id', async (req, res) => {
 
 
 
-app.get("/questions", (req, res) => {
+app.get("/api/questions", (req, res) => {
     questions.find({}, (err, questions) => {
         res.send(questions)
     })
@@ -156,7 +156,7 @@ app.get("/questions", (req, res) => {
 
 
 
-app.get("/answers", (req, res) => {
+app.get("/api/answers", (req, res) => {
     answers.find({}, (err, answers) => {
         res.send(answers)
     })
@@ -187,7 +187,7 @@ function findNextId() {
 
 /****** Routes *****/
 // TODO: Croute route handlers!
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
     questions.find(function (err, data) {
         if (err) return console.error(err);
         res.status(200).json(data)
@@ -198,7 +198,7 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('/data/:id', (req, res) => {
+app.get('/api/data/:id', (req, res) => {
 
     const { id } = req.params;
     const question = data.filter((data) => data.id == id)[0];
