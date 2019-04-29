@@ -1,5 +1,5 @@
 
-
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -10,7 +10,7 @@ app.use(morgan('combined'))
 
 /****** Configuration *****/
 const port = (process.env.PORT || 8081);
-
+app.use(express.static(path.join(__dirname, '../build')));
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/qas');
@@ -224,7 +224,10 @@ app.get('/data/:id', (req, res) => {
 
 
 
-
+/**** Reroute all unknown requests to the React index.html ****/
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 
 
