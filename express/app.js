@@ -68,7 +68,7 @@ pizza.save(function (err, pizza) {
 
 
 
-app.post('/NewQuestion', (req, res, next) => {
+app.post('/NewQuestion', (req, res) => {
     var NewQuestion = new questions(req.body)
     NewQuestion.save(function (err, NewQuestion) {
         if (err) { return next(err) }
