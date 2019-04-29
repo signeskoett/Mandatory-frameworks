@@ -13,7 +13,7 @@ const port = (process.env.PORT || 8081);
 app.use(express.static(path.join(__dirname, '../build')));
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://signe:signeskoett12!@cluster0-fza4r.azure.mongodb.net/test?retryWrites=true');
+mongoose.connect('mongodb+srv://signe:signeskoett12!@cluster0-fza4r.azure.mongodb.net/Mandatory?retryWrites=true');
 
 
 var db = mongoose.connection;
