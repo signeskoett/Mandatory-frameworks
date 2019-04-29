@@ -27,7 +27,7 @@ class App extends Component {
 
 
     componentDidMount(){
-        fetch('http://localhost:8081')
+        fetch('https://signe-frameworks.herokuapp.com/')
             .then(response => { return response.json()})
             .then(data => this.setState({qas: data}))
             .catch(err => console.error(err))
@@ -35,7 +35,7 @@ class App extends Component {
 
 
     addQuestion(questions) {
-        fetch('http://localhost:8081/NewQuestion', {
+        fetch('https://signe-frameworks.herokuapp.com//NewQuestion', {
             method: 'POST',
             body: JSON.stringify({
                 questions: questions,
@@ -55,7 +55,7 @@ class App extends Component {
 
 
     addAnswers(answers, id) {
-        fetch('http://localhost:8081/answers/' + id, {
+        fetch('https://signe-frameworks.herokuapp.com/answers/' + id, {
             method: 'post',
             body: JSON.stringify({
                 answers: answers,
