@@ -24,6 +24,8 @@ class App extends Component {
 
         };
 
+        this.addQuestion = this.addQuestion.bind(this);
+        this.addAnswers = this.addAnswers.bind(this);
     }
 
 
