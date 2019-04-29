@@ -28,7 +28,7 @@ class App extends Component {
 
 
     componentDidMount(){
-        fetch(`${this.api_url}/`)
+        fetch(`${this.api_url}/questions`)
             .then(response => { return response.json()})
             .then(data => this.setState({qas: data}))
             .catch(err => console.error(err))
