@@ -8,7 +8,7 @@ class Recipe extends Component {
             <div>
                 <h3>404 Not Found</h3>
 
-                <Link to={'/api/'}>Go back to the front page...</Link>
+                <Link to={'/'}>Go back to the front page...</Link>
             </div>
         );
     }

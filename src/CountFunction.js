@@ -1,7 +1,13 @@
 import React from 'react';
 
 class CountFunction extends React.Component {
+    api_url = process.env.REACT_APP_API_URL;
     state = { count: 0 }
+
+    constructor(props){
+        super(props);
+        this.voteOnAnswer = this.voteOnAnswer.bind(this)
+    }
 
     componentDidMount() {
         this.setState({
@@ -34,7 +40,7 @@ class CountFunction extends React.Component {
 
     voteOnAnswer() {
         let { answer, id } = this.props
-        fetch('https://signe-frameworks.herokuapp.com/api/votes/' + id, {
+        fetch(`${this.api_url}/votes/${id}`, {
             method: 'post',
             body: JSON.stringify({
                 answerId: answer._id,

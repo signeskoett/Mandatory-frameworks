@@ -12,7 +12,7 @@ import NewAnswers from "./NewAnswers";
 
 class App extends Component {
 
-
+    api_url = process.env.REACT_APP_API_URL;
 
     constructor(props) {
         super(props);
@@ -28,7 +28,7 @@ class App extends Component {
 
 
     componentDidMount(){
-        fetch('https://signe-frameworks.herokuapp.com/api/')
+        fetch(`${this.api_url}/`)
             .then(response => { return response.json()})
             .then(data => this.setState({qas: data}))
             .catch(err => console.error(err))
@@ -36,7 +36,7 @@ class App extends Component {
 
 
     addQuestion(questions) {
-        fetch('https://signe-frameworks.herokuapp.com/api/NewQuestion', {
+        fetch(`${this.api_url}/NewQuestion`, {
             method: 'POST',
             body: JSON.stringify({
                 questions: questions,
@@ -56,7 +56,7 @@ class App extends Component {
 
 
     addAnswers(answers, id) {
-        fetch('https://signe-frameworks.herokuapp.com/api/answers/' + id, {
+        fetch(`${this.api_url}/answers/${id}`, {
             method: 'post',
             body: JSON.stringify({
                 answers: answers,
@@ -95,14 +95,14 @@ class App extends Component {
                     <h1>Questions!</h1>
 
                     <Switch>
-                        <Route exact path={'/api/'}
+                        <Route exact path={'/'}
                                render={(props) =>
                                    <QuestionList {...props}
                                                  qas={this.state.qas}
                                                  header={'All questions'}/>}
                         />
 
-                        <Route exact path={'/api/question/:id'}
+                        <Route exact path={'/question/:id'}
                                render={(props) =>
                                    <Question {...props}
                                              questions={this.getQuestionFromId(props.match.params.id) } addAnswers={this.addAnswers}   answers={this.getAnswersFromId(props.match.params.id)} />
@@ -114,11 +114,11 @@ class App extends Component {
 
 
 
-                        <Route exact path={'/api/NewQuestion'}
+                        <Route exact path={'/NewQuestion'}
                                render={(props) =>
                                    <NewQuestion {...props}  addQuestion={this.addQuestion}  ></NewQuestion>}/>
 
-                        <Route exact path={'/api/NewAnswers'}
+                        <Route exact path={'/NewAnswers'}
                                render={(props) =>
                                    <NewAnswers {...props}  addAnswers={this.addAnswers}   answers={this.getAnswersFromId(props.match.params.id)} ></NewAnswers>}/>
 
