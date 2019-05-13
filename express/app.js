@@ -27,7 +27,7 @@ const server = app.listen(port,
 
 const  io = require('socket.io').listen(server);
 
-io.of('/my_app').on('connection', function (socket){
+io.of('api/my_app').on('connection', function (socket){
     socket.on('hello', function (from, msg) {
         console.log(`I received a private message from '${from}' saying '${msg}'`);
     });
@@ -95,7 +95,7 @@ app.post('/api/NewQuestion', (req, res) => {
     console.log('enter meeeeeee')
     var NewQuestion = new questions(req.body)
     NewQuestion.save(function (err, NewQuestion) {
-        io.of('/my_app').emit('new-data', {
+        io.of('/api/my_app').emit('new-data', {
             msg: 'New data is available on /api/my_data'
         });
         if (err) { return next(err) }
@@ -117,7 +117,7 @@ app.post('/api/answers/:id', async (req, res) => {
         (err, docs) => {
             console.log(docs)
             docs.answers.push(answer);
-            io.of('/my_app').emit('new-data', {
+            io.of('/api/my_app').emit('new-data', {
                 msg: 'New data is available on /api/my_data'
             });
             docs.save();
@@ -159,7 +159,7 @@ app.post('/api/votes/:id', async (req, res) => {
 
             })
 
-            io.of('/my_app').emit('new-data', {
+            io.of('/api/my_app').emit('new-data', {
                 msg: 'New data is available on /api/my_data'
             });
 

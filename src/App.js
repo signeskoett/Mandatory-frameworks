@@ -34,7 +34,7 @@ class App extends Component {
     SOCKET_URL = `${this.api_url}/my_app`;
 
     componentDidMount() {
-
+console.log(this.SOCKET_URL)
         const socket = io(this.SOCKET_URL);
 
         socket.on('connect',() => {
