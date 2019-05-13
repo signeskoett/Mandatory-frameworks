@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Question from "./Question";
-import CountFunction from "./CountFunction";
+
 
 class NewAnswers extends Component {
     constructor(props) {
@@ -30,7 +30,6 @@ class NewAnswers extends Component {
 
 
     handleInput(event) {
-        event.preventDefault()
         this.props.addAnswers(this.state.answers, this.props.id);
         this.setState({
             onSucess: <h2>Du har tilføjet {this.state.answers} </h2>

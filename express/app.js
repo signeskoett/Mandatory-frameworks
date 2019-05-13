@@ -19,6 +19,24 @@ mongoose.connect('mongodb+srv://signe:signeskoett12!@cluster0-fza4r.azure.mongod
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
+
+/****** socket.io *****/
+
+const server = app.listen(port,
+    () => console.log(`Some app running on port ${port}`));
+
+const  io = require('socket.io').listen(server);
+
+io.of('/my_app').on('connection', function (socket){
+    socket.on('hello', function (from, msg) {
+        console.log(`I received a private message from '${from}' saying '${msg}'`);
+    });
+    socket.on('disconnect', () => {
+        console.log("someone disconnected");
+    });
+});
+
+
 // Additional headers to avoid triggering CORS security errors in the browser
 // Read more: https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
 app.use((req, res, next) => {
@@ -37,6 +55,10 @@ app.use((req, res, next) => {
     }
 });
 
+
+
+
+
 /****** Data *****/
 var answerSchema = new mongoose.Schema({
     answers: String,
@@ -50,6 +72,7 @@ var qasSchema = new mongoose.Schema({
     answers: [answerSchema]
 
 });
+
 
 
 
@@ -72,11 +95,15 @@ app.post('/api/NewQuestion', (req, res) => {
     console.log('enter meeeeeee')
     var NewQuestion = new questions(req.body)
     NewQuestion.save(function (err, NewQuestion) {
+        io.of('/my_app').emit('new-data', {
+            msg: 'New data is available on /api/my_data'
+        });
         if (err) { return next(err) }
         res.json(201, NewQuestion);
         console.log("Et nyt question er tilføjet");
     })
 })
+
 
 
 
@@ -89,8 +116,12 @@ app.post('/api/answers/:id', async (req, res) => {
         { _id: req.params.id},
         (err, docs) => {
             console.log(docs)
-            docs.answers.push(answer)
-            docs.save()
+            docs.answers.push(answer);
+            io.of('/my_app').emit('new-data', {
+                msg: 'New data is available on /api/my_data'
+            });
+            docs.save();
+
         }
 
     )
@@ -105,6 +136,10 @@ app.post('/api/answers/:id', async (req, res) => {
     res.send();
 
 });
+
+
+
+
 
 
 
@@ -124,9 +159,12 @@ app.post('/api/votes/:id', async (req, res) => {
 
             })
 
-
+            io.of('/my_app').emit('new-data', {
+                msg: 'New data is available on /api/my_data'
+            });
 
             docs.save()
+
         }
 
     )
@@ -235,6 +273,6 @@ app.get('/*', (req, res) => {
 
 
 
-app.listen(port, () => console.log(`Question API running on port ${port}!`))
+/*app.listen(port, () => console.log(`Question API running on port ${port}!`)) */
 
 

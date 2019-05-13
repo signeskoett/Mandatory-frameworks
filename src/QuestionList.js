@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 class QuestionList extends Component {
@@ -8,7 +8,7 @@ class QuestionList extends Component {
         let list = [];
 
         this.props.qas.forEach((elm) => {
-            list.push(<li id="spm_elm">
+            list.push(<li key={elm._id} id="spm_elm">
                 <Link to={`/question/${elm._id}`}>{elm.questions }</Link>
             </li>)
         });

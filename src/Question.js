@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
 import NewAnswers from "./NewAnswers";
 import CountFunction from "./CountFunction";
 

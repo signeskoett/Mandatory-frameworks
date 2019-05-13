@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import io from 'socket.io-client';
 
 import QuestionList from "./QuestionList";
 import Question from "./Question";
 import NotFound from "./NotFound";
 import NewQuestion from "./NewQuestion";
 import NewAnswers from "./NewAnswers";
+
 
 
 
@@ -29,12 +31,36 @@ class App extends Component {
     }
 
 
-    componentDidMount(){
-        fetch(`${this.api_url}/questions`)
-            .then(response => { return response.json()})
-            .then(data => this.setState({qas: data}))
-            .catch(err => console.error(err))
+    SOCKET_URL = 'http://localhost:8080/my_app';
+
+    componentDidMount() {
+
+        const socket = io(this.SOCKET_URL);
+
+        socket.on('connect',() => {
+            console.log("connected to socket.io");
+            socket.emit('Hello', "Signe" , "howdy");
+        });
+
+        socket.on('new-data', (questions) => {
+            console.log(`server msg: ${questions.msg}`);
+            this.getData();
+
+        });
+        this.getData();
     }
+
+
+
+    getData() {
+            fetch(`${this.api_url}/questions`)
+                .then(response => { return response.json()})
+                .then(data => this.setState({qas: data}))
+                .catch(err => console.error(err));
+
+
+        }
+
 
 
     addQuestion(questions) {
