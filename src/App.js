@@ -31,7 +31,7 @@ class App extends Component {
     }
 
 
-    SOCKET_URL = 'http://localhost:8080/my_app';
+    SOCKET_URL = `${this.api_url}/my_app`;
 
     componentDidMount() {
 
